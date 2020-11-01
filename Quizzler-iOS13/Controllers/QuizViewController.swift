@@ -11,8 +11,11 @@ import UIKit
 class QuizViewController: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var trueButton: UIButton!
-    @IBOutlet weak var falseButton: UIButton!
+    
+    @IBOutlet weak var optionOne: UIButton!
+    @IBOutlet weak var optionTwo: UIButton!
+    @IBOutlet weak var optionThree: UIButton!
+
     @IBOutlet weak var scoreLabel: UILabel!
     
     var quizBrain = QuizBrain()
@@ -39,14 +42,18 @@ class QuizViewController: UIViewController {
     
     func updateProgressIndicatorAndCurrentQuestionText() {
         questionLabel.text = quizBrain.currectQuestion.text
+        optionOne.setTitle(quizBrain.currectQuestion.options[0], for: .normal)
+        optionTwo.setTitle(quizBrain.currectQuestion.options[1], for: .normal)
+        optionThree.setTitle(quizBrain.currectQuestion.options[2], for: .normal)
 
         progressView.progress = quizBrain.progressSoFar
         
         scoreLabel.text = "Score : \(quizBrain.score)"
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-            self.trueButton.backgroundColor = .clear
-            self.falseButton.backgroundColor = .clear
+            self.optionOne.backgroundColor = .clear
+            self.optionTwo.backgroundColor = .clear
+            self.optionThree.backgroundColor = .clear
         }
     }
 }
