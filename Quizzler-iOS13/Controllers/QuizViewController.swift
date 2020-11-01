@@ -13,6 +13,7 @@ class QuizViewController: UIViewController {
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var trueButton: UIButton!
     @IBOutlet weak var falseButton: UIButton!
+    @IBOutlet weak var scoreLabel: UILabel!
     
     var quizBrain = QuizBrain()
     
@@ -30,9 +31,9 @@ class QuizViewController: UIViewController {
         
         sender.backgroundColor = quizBrain.isValid(answer: userAnswer) ? .green : .red
         
-        updateProgressIndicatorAndCurrentQuestionText()
-        
         quizBrain.next()
+        
+        updateProgressIndicatorAndCurrentQuestionText()
     }
     
     
@@ -40,6 +41,8 @@ class QuizViewController: UIViewController {
         questionLabel.text = quizBrain.currectQuestion.text
 
         progressView.progress = quizBrain.progressSoFar
+        
+        scoreLabel.text = "Score : \(quizBrain.score)"
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
             self.trueButton.backgroundColor = .clear

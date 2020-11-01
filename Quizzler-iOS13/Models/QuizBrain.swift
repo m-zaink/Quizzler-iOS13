@@ -26,6 +26,7 @@ struct QuizBrain {
     ]
     
     private var currentQuestionNumber: Int = 0
+    private var currentScore: Int = 0
     
     var progressSoFar: Float {
         return Float(currentQuestionNumber + 1) / Float(quiz.count)
@@ -35,11 +36,26 @@ struct QuizBrain {
         return quiz[currentQuestionNumber]
     }
     
-    mutating func next() {
-        currentQuestionNumber = (currentQuestionNumber + 1) % quiz.count
+    var score: Int {
+        get {
+            return currentScore
+        }
     }
     
-    func validate(answer: String) -> Bool {
-        return answer == currectQuestion.answer
+    mutating func next() {
+        currentQuestionNumber = (currentQuestionNumber + 1) % quiz.count
+        
+        if currentQuestionNumber == 0 {
+            currentScore = 0
+        }
+    }
+    
+    mutating func isValid(answer: String) -> Bool {
+        if answer == currectQuestion.answer {
+            currentScore += 1
+            return true
+        } else {
+            return false
+        }
     }
 }
